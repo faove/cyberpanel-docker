@@ -1,7 +1,7 @@
 version: '3.9'
 services:
-  cyberpanel:
-    image: centos:7
+  cyberpanel:    
+    image: cyberpanel/cyberpanel:latest
     container_name: cyberpanel
     privileged: true
     environment:
@@ -10,7 +10,7 @@ services:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.cyberpanel.rule=Host(`panel.erp.elantar.net`)"
+      - "traefik.http.routers.cyberpanel.rule=Host(`panel.xservice.store`)"
       - "traefik.http.routers.cyberpanel.entrypoints=web,websecure"
       - "traefik.http.routers.cyberpanel.tls=true"
       - "traefik.http.routers.cyberpanel.tls.certresolver=letsencrypt"
