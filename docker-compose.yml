@@ -22,7 +22,7 @@ services:
       - "587:587" # Submission
       #- "110:110"  POP3
       - "995:995" # POP3S
-      - "143:143" # IMAP
+      #- "143:143" # IMAP
       - "993:993" # IMAPS
     command: /usr/sbin/init
     networks:
