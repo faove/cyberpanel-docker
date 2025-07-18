@@ -1,0 +1,49 @@
+version: '3.9'
+services:
+  cyberpanel:
+    image: centos:7
+    container_name: cyberpanel
+    privileged: true
+    environment:
+      - container=docker
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cyberpanel.rule=Host(`panel.erp.elantar.net`)"
+      - "traefik.http.routers.cyberpanel.entrypoints=web,websecure"
+      - "traefik.http.routers.cyberpanel.tls=true"
+      - "traefik.http.routers.cyberpanel.tls.certresolver=letsencrypt"
+      - "traefik.http.services.cyberpanel.loadbalancer.server.port=7080"
+    ports:
+      - "7080"    # Web UI
+      - "25:25"   # SMTP
+      - "465:465" # SMTPS
+      - "587:587" # Submission
+      - "110:110" # POP3
+      - "995:995" # POP3S
+      - "143:143" # IMAP
+      - "993:993" # IMAPS
+    command: /usr/sbin/init
+    networks:
+      - elantar_net
+
+  mysql:
+    image: mariadb:10.5
+    container_name: cyberpanel_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: HrajcB8b4gMkyH9j@.HrajcB8b4gMkyH9j
+      MYSQL_DATABASE: cyberpanel
+      MYSQL_USER: julioarvelo
+      MYSQL_PASSWORD: HrajcB8b4gMkyH9j@.HrajcB8b4gMkyH9j
+    volumes:
+      - cyberpanel_db:/var/lib/mysql
+    networks:
+      - elantar_net
+
+networks:
+  elantar_net:
+    external: true
+
+volumes:
+  cyberpanel_db:
