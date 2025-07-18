@@ -1,7 +1,7 @@
 version: '3.9'
 services:
-  cyberpanel:    
-    image: cyberpanel/cyberpanel:latest
+  cyberpanel:
+    image: centos:7
     container_name: cyberpanel
     privileged: true
     environment:
